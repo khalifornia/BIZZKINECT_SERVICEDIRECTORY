@@ -1,0 +1,65 @@
+{#{% include "directories/home_page.html" %}#}
+{% load static %}
+
+
+<div style="margin-top:25px;" class="container" id="search_results_container">
+    <div class="row" style="height:50px;">
+
+        <a style="float:right;margin: 3px 3px 0 0;" href="/">
+            <img height="50px" width="50px"
+                 src="{% static "/images/orangex.png" %}">
+        </a>
+    </div>
+    <div id="results">
+        <ul style="list-style:none;">
+            {% if search %}
+                {% for result in search %}
+                    {% if forloop.counter == 1 or forloop.counter == 3 or forloop.counter == 5 %}
+                        <div class="row">
+                    {% endif %}
+                <div class="col-lg-6 col-md-6">
+
+                    <li class="result" id="result-{{ forloop.counter }}">
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <span id="result-title-{{ forloop.counter }}"
+                                            class="result-title">{{ result.name }}</span>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <span id="address">{{ result.yp_street_address }} {{ result.yp_city }} {{ result.yp_state }} {{ results.yp_zip_code }}</span>
+                            </div>
+
+                        </div>
+                        <div style="margin-top:20px" id="contact-us-{{ forloop.counter }}"class="row contact-us">
+                        <div>
+                            <span style="text-decoration:underline;"><strong>Book an appointment:</strong></span>
+    </div>
+                            <br/>
+                            <span id="phone-number">{{ result.phone }}</span>
+                            <br/>
+                            <a href="{{ result.yp_url }}">Click here for more info!</a>
+                        </div>
+                        <div>
+
+                        </div>
+
+
+                        </br>
+                    </li>
+
+                </div>
+                {% if forloop.counter == 2 or forloop.counter == 4 or forloop.counter == 6 %}
+                    </div>
+                {% endif %}
+
+                {% endfor %}
+                {% else %}
+                <h1>0 RESULTS, PLEASE TRY A BROADER SEARCH</h1>
+                {% endif %}
+            
+
+        </ul>
+    </div>
+</div>

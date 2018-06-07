@@ -1,0 +1,48 @@
+{% load static %}
+
+<div class="container" id="center-box">
+    <div class="wrapper">
+
+
+        <div id="logo" class="center">
+            <img id="title-logo" src="{% static "images/logo.png" %}" alt="My image"/>
+        </div>
+        <form action="/" method="post">
+            {% csrf_token %}
+
+            {#            <div>#}
+            {#                <div id="crumbs"></div>#}
+            {#            </div>#}
+            <div id="field-background">
+                <div class="dynamic-form">
+                    <div class="styled-select slate">
+
+                        {{ form.location }}
+
+
+                    </div>
+                    <div id="category" class="styled-select slate selection">
+
+                        {{ form.category }}
+
+
+                    </div>
+                </div>
+
+
+
+                {{ form.search_terms }}
+
+
+                <input id="submit-btn" type="submit" value="Go">
+
+
+            </div>
+
+
+
+        </form>
+
+    </div>
+
+</div>

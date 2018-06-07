@@ -1,0 +1,140 @@
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url(http://anemurionhotel.com.tr/wp-content/uploads/2016/05/Blue-Abstract-Background-10-1.jpg);
+            background-size: cover;
+            font-family: 'Montserrat', sans-serif;
+            postion: absolute;
+
+        }
+
+        .title {
+            text-shadow: 1px 1px 1px red;
+            text-align: center;
+
+        }
+
+        .title h1 {
+            margin: 0;
+            padding: 0;
+            color: #ff9934;
+            text-transform: uppercase;
+            font-size: 0.6em;
+        }
+
+        .title h2 {
+            height: 75px;
+            position: relative;
+            margin: 0px;
+            padding: 0;
+            color: #262626;
+            text-shadow: none;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans serif;
+            text-transform: uppercase;
+            font-size: 20px;
+        }
+
+        .title h3 {
+            height: 75px;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            color: #262626;
+            text-shadow: none;
+            font-family: 'Montserrat', sans serif;
+            text-transform: uppercase;
+            font-size: 20px;
+
+        }
+
+        .title h4 {
+            margin: 15px;
+            height: 60px;
+            text-transform: capitalize;
+            font-size: 14px;
+            text-shadow: none;
+
+        }
+
+        .title h5 {
+            margin: 0;
+            padding: 0;
+            text-transform: capitalize;
+            font-size: 13.5px;
+            text-shadow: none;
+        }
+
+        .container-1 {
+            height: 250px;
+            position: relative;
+            width: 20%;
+            margin: 0 auto;
+            background: rgba(130, 130, 130, .3);
+            padding: 20px 22px;
+            border: 1px solid;
+            border-top-color: rgba(255, 255, 255, .4);
+            border-left-color: rgba(255, 255, 255, .4);
+            border-bottom-color: rgba(60, 60, 60, .4);
+            border-right-color: rgba(60, 60, 60, .4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .5)
+        }
+
+        .Login {
+            width: 100%;
+            padding: 0;
+
+        }
+
+        .Login p {
+            margin: 0;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        input[type="Email"],
+        input[type="Password"] {
+            border-color: grey;
+        }
+
+        input[type="submit"] {
+            border-color: white;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #D3D3D3;
+        }
+
+        a:hover {
+            color: #f10e0e;
+        }
+
+    </style>
+</head>
+
+
+
+{#{% block content %}#}
+{#  <h2>Login</h2>#}
+{#  <form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <button type="submit">Login</button>#}
+{#  </form>#}
+{#{% endblock %}#}
+
+<div class="login">
+
+    <div class="title"><h1 style="font-size:2em;">Sign in</h1></div>
+    <div class="container-1">
+        <div class="login"></div>
+        {% block content %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+        {% endblock %}
+    </div>
