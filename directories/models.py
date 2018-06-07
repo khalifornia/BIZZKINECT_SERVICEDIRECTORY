@@ -80,6 +80,7 @@ class SourceScrapeYellowpages(Lead):
     extra_info=models.CharField(max_length=200, blank=True, null=True)
     url=models.CharField(max_length=200)
     product_terms=models.CharField(max_length=1024)
+    
 
 
 
