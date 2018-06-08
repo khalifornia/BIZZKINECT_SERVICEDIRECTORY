@@ -6,6 +6,19 @@ from django.db.models import Q
 from ast import literal_eval
 import queue
 
+from uuid import uuid4
+from urllib.parse import urlparse
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+from django.views.decorators.http import require_POST, require_http_methods
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from scrapyd_api import ScrapydAPI
+
+
+scrapyd = ScrapydAPI('http://127.0.0.1:6800')
+
 # takes search category as argument, returns list of form field keys associated with given category
 def sub_category_switcher(category):
     switcher = {
@@ -72,6 +85,29 @@ def index(request):
 
         # returns empty form on first page load
     return render(request, 'directories/index.html', {'form': form,  'initial_search': True})
+
+
+@csrf_exempt
+def scrape(request, source, search_terms, city, state):
+    meta_info = {
+
+        "source": source,
+        "search_terms": search_terms,
+        "city": city,
+        "state": state
+    }
+    unique_id = str(uuid4())
+    universal_citystate = meta_info['city'] + meta_info['state']
+    settings = {
+        'universal_citystate': universal_citystate,
+        'unique_id': unique_id,  # unique ID for each record for DB
+        'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+    }
+    task = scrapyd.schedule('default', 'yellow_pages_spider', settings=settings, city=meta_info['city'], state=meta_info['state'], search_terms=meta_info['search_terms'])
+    return JsonResponse({'task_id': task, 'unique_id': unique_id, 'universal_citystate': universal_citystate, 'status': 'started'})
+
+
+
 # # /vendor/create/$userid
 # # create new vendor user
 # # takes TS User object
