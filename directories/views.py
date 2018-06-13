@@ -86,7 +86,8 @@ def index(request):
         # returns empty form on first page load
     return render(request, 'directories/index.html', {'form': form,  'initial_search': True})
 
-
+# Scrapy yellowpages
+# /scrape/<source>/<search_terms>/<city>/<state>
 @csrf_exempt
 def scrape(request, source, search_terms, city, state):
     meta_info = {
@@ -97,13 +98,14 @@ def scrape(request, source, search_terms, city, state):
         "state": state
     }
     unique_id = str(uuid4())
-    universal_citystate = meta_info['city'] + meta_info['state']
+    universal_citystate = meta_info['city'] +'-' + meta_info['state']
     settings = {
         'universal_citystate': universal_citystate,
         'unique_id': unique_id,  # unique ID for each record for DB
         'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     }
-    task = scrapyd.schedule('default', 'yellow_pages_spider', settings=settings, city=meta_info['city'], state=meta_info['state'], search_terms=meta_info['search_terms'])
+    for page_counter in range(101):
+        task = scrapyd.schedule('default', 'yellow_pages_spider', settings=settings, city=meta_info['city'], state=meta_info['state'], search_terms=meta_info['search_terms'], page_counter=page_counter)
     return JsonResponse({'task_id': task, 'unique_id': unique_id, 'universal_citystate': universal_citystate, 'status': 'started'})
 
 

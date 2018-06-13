@@ -38,7 +38,11 @@ class LeadScraperPipeline(object):
 
 
             )
-            print(record.email)
-            print("success")
+            try:
+                record.save()
+                print(record.email)
+                print("success")
+            except:
+                print("failed")
         # record.save()
         return item

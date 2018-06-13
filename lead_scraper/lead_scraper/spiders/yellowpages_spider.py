@@ -12,15 +12,16 @@ class YellowPagesSpider(scrapy.Spider):
         self.city = kwargs.get('city')
         self.state = kwargs.get('state')
         self.search_terms = kwargs.get('search_terms')
+        self.page_counter = kwargs.get('page_counter')
         super(YellowPagesSpider, self).__init__(*args, **kwargs)
         # YellowPagesSpider.rules = [
         #    Rule(LinkExtractor(unique=True), callback='parse_item'),
         # ]
 
     def start_requests(self):
-        for i in range(101):
-            url = 'https://www.yellowpages.com/search?search_terms=' + self.search_terms + \
-                  '&geo_location_terms=' + self.city + '%2C+' + self.state + '&page=3'
+        
+        url = 'https://www.yellowpages.com/search?search_terms=' + self.search_terms + \
+              '&geo_location_terms=' + self.city + '%2C+' + self.state + '&page=' + str(self.page_counter)
 
         # url = 'https://www.yellowpages.com/search?search_terms=Dentist&geo_location_terms=Phoenix%2C+AZ&page=3'
         yield scrapy.Request(url=url, callback=self.parse_results)
