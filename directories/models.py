@@ -79,6 +79,7 @@ class ScrapeYellowpagesRecord(models.Model):
     class Meta:
         db_table = '_source_scrape_yellowpages'
 
+    name=models.CharField(max_length=256)
     date_created = models.DateTimeField(default=timezone.now)
     unique_id = models.CharField(max_length=100, null=True)
     universal_citystate=models.CharField(max_length=100)

@@ -24,6 +24,7 @@ class LeadScraperPipeline(object):
     def process_item(self, item, spider):
         if item['source'] == 'yellowpages':
             record = ScrapeYellowpagesRecord(
+                name=item['business name'],
                 unique_id=self.unique_id,
                 search_terms=item['search_terms'],
                 universal_citystate=self.universal_citystate,
