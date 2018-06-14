@@ -89,25 +89,38 @@ def index(request):
 # Scrapy yellowpages
 # /scrape/<source>/<search_terms>/<city>/<state>
 @csrf_exempt
-def scrape(request, source, search_terms, city, state):
-    meta_info = {
+def scrape(request, source, search_terms, city, state, page_range, password):
+    if password == 'am_ghey':
+        meta_info = {
 
-        "source": source,
-        "search_terms": search_terms,
-        "city": city,
-        "state": state
-    }
-    unique_id = str(uuid4())
-    universal_citystate = meta_info['city'] +'-' + meta_info['state']
-    settings = {
-        'universal_citystate': universal_citystate,
-        'unique_id': unique_id,  # unique ID for each record for DB
-        'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-    }
-    for page_counter in range(101):
-        task = scrapyd.schedule('default', 'yellow_pages_spider', settings=settings, city=meta_info['city'], state=meta_info['state'], search_terms=meta_info['search_terms'], page_counter=page_counter)
-    return JsonResponse({'task_id': task, 'unique_id': unique_id, 'universal_citystate': universal_citystate, 'status': 'started'})
+            "source": source,
+            "search_terms": search_terms,
+            "city": city,
+            "state": state
+        }
 
+        # Unique ID for each scraper instance
+        unique_id = str(uuid4())
+
+        #Universally recognized citystate string
+        universal_citystate = meta_info['city'] +'-' + meta_info['state']
+
+        # Can be accessed from anywhere in scraper
+        settings = {
+            'universal_citystate': universal_citystate,
+            'unique_id': unique_id,  # unique ID for each record for DB
+            'USER_AGENT': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        }
+        for page_counter in range(int(page_range)):
+            
+            # schedule Scrapyd task
+            task = scrapyd.schedule('default', 'yellow_pages_spider', settings=settings, city=meta_info['city'], state=meta_info['state'], search_terms=meta_info['search_terms'], page_counter=page_counter)
+        return JsonResponse({'task_id': task, 'unique_id': unique_id, 'universal_citystate': universal_citystate, 'status': 'started'})
+    elif password == 'sboj':
+        jobs = scrapyd.list_jobs('default')
+        return HttpResponse(jobs['running'])
+    else:
+        return HttpResponse("Bad Password")
 
 
 # # /vendor/create/$userid

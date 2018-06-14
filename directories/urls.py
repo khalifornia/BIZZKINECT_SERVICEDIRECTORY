@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^$', views.index),
 
     # YellowPagesScraper,
-    url(r'^scrape/(?P<source>\w{1,50})/(?P<search_terms>[+\w]+)/(?P<city>[-\w]+)/(?P<state>[-\w]+)$', views.scrape),
+    url(r'^scrape/(?P<source>\w{1,50})/(?P<search_terms>[+\w]+)/(?P<city>[-\w]+)/(?P<state>[-\w]+)/(?P<page_range>[0-9]{4})/(?P<password>[-\w]+)/$', views.scrape),
         ]
