@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
 
 def home_page(request):
-    return HttpResponse("Welcome to our service directory")
+    return render(request, 'defaults/index.html')
 
 def signup(request):
 

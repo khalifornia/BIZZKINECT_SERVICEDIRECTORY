@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^signup/$', views.signup),
     url(r'^buy/$', views.mediakit),
-    url(r'^test/$', views.test),
+    url(r'^test/$', views.home_page),
     url(r'', include('directories.urls')),
     url(r'', include('tolearn.urls')),
     url(r'', include('angular_directory.urls')),
